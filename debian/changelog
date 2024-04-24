@@ -1,3 +1,9 @@
+runc (1.1.10+ds1-1deepin1) unstable; urgency=medium
+
+  * libcontainer: drop system.Setxid.
+
+ -- LiChengGang <lichenggang@uniontech.com>  Wed, 24 Apr 2024 10:47:55 +0800
+
 runc (1.1.10+ds1-1) unstable; urgency=medium
 
   * Team upload
