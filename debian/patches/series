@@ -9,3 +9,4 @@
 0009-skip-test-file_test.go.patch
 0010-export-blockIODevice.patch
 0011-Bump-go-criu-to-v6.patch
+drop-system.Setxid.patch
