@@ -11,7 +11,7 @@ Build-Depends: debhelper-compat (= 13),
                go-md2man,
                golang-any,
                golang-dbus-dev,
-               golang-github-checkpoint-restore-go-criu-dev (>= 6),
+               golang-github-checkpoint-restore-go-criu-dev (>= 7),
                golang-github-cilium-ebpf-dev (>= 0.6.2~),
                golang-github-containerd-console-dev,
                golang-github-coreos-go-systemd-dev (>= 22.3.2~),
@@ -28,6 +28,7 @@ Build-Depends: debhelper-compat (= 13),
                golang-gocapability-dev (>= 0.0+git20200815~),
                golang-golang-x-net-dev,
                golang-google-protobuf-dev,
+               pkgconf,
 Homepage: https://github.com/opencontainers/runc
 Vcs-Git: https://salsa.debian.org/go-team/packages/runc.git
 Vcs-Browser: https://salsa.debian.org/go-team/packages/runc

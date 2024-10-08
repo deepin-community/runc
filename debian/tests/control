@@ -17,8 +17,8 @@ Tests: checkpoint
 Architecture: amd64 arm64 armhf
 Depends: bats,
          ca-certificates,
-         curl,
          criu,
+         curl,
          gawk,
          golang-any,
          jq,

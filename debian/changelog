@@ -1,8 +1,38 @@
-runc (1.1.10+ds1-1deepin1) unstable; urgency=medium
+runc (1.1.12+ds1-5) unstable; urgency=medium
 
-  * libcontainer: drop system.Setxid.
+  * Team upload.
+  * Upload to unstable
 
- -- LiChengGang <lichenggang@uniontech.com>  Wed, 24 Apr 2024 10:47:55 +0800
+ -- Reinhard Tartler <siretart@tauware.de>  Sat, 17 Aug 2024 07:19:43 -0400
+
+runc (1.1.12+ds1-4) experimental; urgency=medium
+
+  * Team upload.
+  * Fix FTBFS on arm64, armel, Closes: #1070415
+
+ -- Reinhard Tartler <siretart@tauware.de>  Thu, 08 Aug 2024 11:01:19 -0400
+
+runc (1.1.12+ds1-3) experimental; urgency=medium
+
+  * Team upload.
+  * Compile against go-criu v7
+
+ -- Reinhard Tartler <siretart@tauware.de>  Thu, 08 Aug 2024 08:18:21 -0400
+
+runc (1.1.12+ds1-2) unstable; urgency=medium
+
+  * Team upload
+  * Add pkgconf to Build-Depends
+
+ -- Shengjing Zhu <zhsj@debian.org>  Tue, 27 Feb 2024 18:01:32 +0800
+
+runc (1.1.12+ds1-1) unstable; urgency=medium
+
+  * Team upload
+  * New upstream version 1.1.12+ds1
+    + CVE-2024-21626: several container breakouts due to internally leaked fds
+
+ -- Shengjing Zhu <zhsj@debian.org>  Fri, 02 Feb 2024 21:20:26 +0800
 
 runc (1.1.10+ds1-1) unstable; urgency=medium
 

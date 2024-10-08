@@ -1,0 +1,50 @@
+From: Reinhard Tartler <siretart@tauware.de>
+Date: Thu, 8 Aug 2024 08:21:07 -0400
+Subject: Compile against go-criu v7
+
+---
+ checkpoint.go                   | 2 +-
+ libcontainer/container_linux.go | 4 ++--
+ libcontainer/criu_opts_linux.go | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/checkpoint.go b/checkpoint.go
+index 32a62a8..fa41267 100644
+--- a/checkpoint.go
++++ b/checkpoint.go
+@@ -8,7 +8,7 @@ import (
+ 	"path/filepath"
+ 	"strconv"
+ 
+-	criu "github.com/checkpoint-restore/go-criu/v5/rpc"
++	criu "github.com/checkpoint-restore/go-criu/v7/rpc"
+ 	"github.com/opencontainers/runc/libcontainer"
+ 	"github.com/opencontainers/runc/libcontainer/userns"
+ 	"github.com/opencontainers/runtime-spec/specs-go"
+diff --git a/libcontainer/container_linux.go b/libcontainer/container_linux.go
+index 40b332f..ab8bd1e 100644
+--- a/libcontainer/container_linux.go
++++ b/libcontainer/container_linux.go
+@@ -17,8 +17,8 @@ import (
+ 	"sync"
+ 	"time"
+ 
+-	"github.com/checkpoint-restore/go-criu/v5"
+-	criurpc "github.com/checkpoint-restore/go-criu/v5/rpc"
++	"github.com/checkpoint-restore/go-criu/v7"
++	criurpc "github.com/checkpoint-restore/go-criu/v7/rpc"
+ 	securejoin "github.com/cyphar/filepath-securejoin"
+ 	"github.com/opencontainers/runtime-spec/specs-go"
+ 	"github.com/sirupsen/logrus"
+diff --git a/libcontainer/criu_opts_linux.go b/libcontainer/criu_opts_linux.go
+index b39476e..526d7d2 100644
+--- a/libcontainer/criu_opts_linux.go
++++ b/libcontainer/criu_opts_linux.go
+@@ -1,6 +1,6 @@
+ package libcontainer
+ 
+-import criu "github.com/checkpoint-restore/go-criu/v5/rpc"
++import criu "github.com/checkpoint-restore/go-criu/v7/rpc"
+ 
+ type CriuPageServerInfo struct {
+ 	Address string // IP address of CRIU page server

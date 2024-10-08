@@ -1,0 +1,25 @@
+From: Reinhard Tartler <siretart@tauware.de>
+Date: Thu, 8 Aug 2024 10:59:29 -0400
+Subject: TestDevicesSetAllow: Skip test when cgroup file is empty
+Bug-Debian: https://bugs.debian.org/1070415
+
+---
+ libcontainer/cgroups/fs/devices_test.go | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/libcontainer/cgroups/fs/devices_test.go b/libcontainer/cgroups/fs/devices_test.go
+index bdd1967..f059889 100644
+--- a/libcontainer/cgroups/fs/devices_test.go
++++ b/libcontainer/cgroups/fs/devices_test.go
+@@ -39,6 +39,11 @@ func TestDevicesSetAllow(t *testing.T) {
+ 	if err != nil {
+ 		t.Fatal(err)
+ 	}
++
++	if value == "" {
++		t.Skipf("cgroup paramater %v empty, cannot execute test", path)
++	}
++
+ 	if value[0] != 'a' {
+ 		t.Errorf("Got the wrong value (%q), set devices.deny failed.", value)
+ 	}
