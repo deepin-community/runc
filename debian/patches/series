@@ -10,3 +10,4 @@
 0010-export-blockIODevice.patch
 0011-Compile-against-go-criu-v7.patch
 0012-TestDevicesSetAllow-Skip-test-when-cgroup-file-is-em.patch
+0013-loong64-support.patch

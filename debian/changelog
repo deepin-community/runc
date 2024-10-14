@@ -1,3 +1,11 @@
+runc (1.1.12+ds1-5deepin1) unstable; urgency=medium
+
+  [ chenguoqi <chenguoqi@loongson.cn> ]
+  * d/p/0013-loong64-support.patch
+    - add patch to support loongarch64 (#1069166)
+
+ -- Tianyu Chen <sweetyfish@deepin.org>  Mon, 14 Oct 2024 13:36:55 +0800
+
 runc (1.1.12+ds1-5) unstable; urgency=medium
 
   * Team upload.
