@@ -28,6 +28,10 @@ A third party security audit was performed by Cure53, you can see the full repor
 
 `runc` only supports Linux. It must be built with Go version 1.17 or higher.
 
+NOTE: if building with Go 1.22.x, make sure to use 1.22.4 or a later version
+(see [issue #4233](https://github.com/opencontainers/runc/issues/4233) for
+more details).
+
 In order to enable seccomp support you will need to install `libseccomp` on your platform.
 > e.g. `libseccomp-devel` for CentOS, or `libseccomp-dev` for Ubuntu
 
@@ -52,6 +56,16 @@ sudo make install
 
 `runc` will be installed to `/usr/local/sbin/runc` on your system.
 
+#### Version string customization
+
+You can see the runc version by running `runc --version`. You can append a custom string to the
+version using the `EXTRA_VERSION` make variable when building, e.g.:
+
+```bash
+make EXTRA_VERSION="+build-1"
+```
+
+Bear in mind to include some separator for readability.
 
 #### Build Tags
 

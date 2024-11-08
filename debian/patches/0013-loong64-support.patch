@@ -1,0 +1,39 @@
+From 10c19dffb9dc2121a3d5d6b8e8ee905fbe11c012 Mon Sep 17 00:00:00 2001
+From: Guoqi Chen <chenguoqi@loongson.cn>
+Date: Wed, 17 Apr 2024 08:16:06 +0000
+Subject: [PATCH] libcontainer: add loong64 build support.
+
+Signed-off-by: Guoqi Chen <chenguoqi@loongson.cn>
+---
+ libcontainer/nsenter/cloned_binary.c    | 2 +-
+ libcontainer/system/syscall_linux_64.go | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/libcontainer/nsenter/cloned_binary.c b/libcontainer/nsenter/cloned_binary.c
+index d1b2d4c..88f3255 100644
+--- a/libcontainer/nsenter/cloned_binary.c
++++ b/libcontainer/nsenter/cloned_binary.c
+@@ -73,7 +73,7 @@
+ #      define SYS_memfd_create 1340
+ #    elif defined(__arm__)
+ #      define SYS_memfd_create 385
+-#    elif defined(__aarch64__)
++#    elif defined(__aarch64__) || defined(__loongarch64)
+ #      define SYS_memfd_create 279
+ #    elif defined(__ppc__) || defined(__PPC64__) || defined(__powerpc64__)
+ #      define SYS_memfd_create 360
+diff --git a/libcontainer/system/syscall_linux_64.go b/libcontainer/system/syscall_linux_64.go
+index 1ed0dba..262450a 100644
+--- a/libcontainer/system/syscall_linux_64.go
++++ b/libcontainer/system/syscall_linux_64.go
+@@ -1,6 +1,6 @@
+-//go:build linux && (arm64 || amd64 || mips || mipsle || mips64 || mips64le || ppc || ppc64 || ppc64le || riscv64 || s390x)
++//go:build linux && (arm64 || amd64 || loong64 || mips || mipsle || mips64 || mips64le || ppc || ppc64 || ppc64le || riscv64 || s390x)
+ // +build linux
+-// +build arm64 amd64 mips mipsle mips64 mips64le ppc ppc64 ppc64le riscv64 s390x
++// +build arm64 amd64 loong64 mips mipsle mips64 mips64le ppc ppc64 ppc64le riscv64 s390x
+ 
+ package system
+ 
+-- 
+2.43.0

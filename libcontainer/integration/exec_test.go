@@ -18,6 +18,7 @@ import (
 	"github.com/opencontainers/runc/libcontainer/cgroups"
 	"github.com/opencontainers/runc/libcontainer/cgroups/systemd"
 	"github.com/opencontainers/runc/libcontainer/configs"
+	"github.com/opencontainers/runc/libcontainer/userns"
 	"github.com/opencontainers/runtime-spec/specs-go"
 
 	"golang.org/x/sys/unix"
@@ -134,11 +135,13 @@ func testRlimit(t *testing.T, userns bool) {
 
 	config := newTemplateConfig(t, &tParam{userns: userns})
 
-	// ensure limit is lower than what the config requests to test that in a user namespace
+	// Ensure limit is lower than what the config requests to test that in a user namespace
 	// the Setrlimit call happens early enough that we still have permissions to raise the limit.
+	// Do not change the Cur value to be equal to the Max value, please see:
+	// https://github.com/opencontainers/runc/pull/4265#discussion_r1589666444
 	ok(t, unix.Setrlimit(unix.RLIMIT_NOFILE, &unix.Rlimit{
 		Max: 1024,
-		Cur: 1024,
+		Cur: 512,
 	}))
 
 	out := runContainerOk(t, config, "/bin/sh", "-c", "ulimit -n")
@@ -1588,6 +1591,11 @@ func TestInitJoinNetworkAndUser(t *testing.T) {
 	config2 := newTemplateConfig(t, &tParam{userns: true})
 	config2.Namespaces.Add(configs.NEWNET, netns1)
 	config2.Namespaces.Add(configs.NEWUSER, userns1)
+	// Emulate specconv.setupUserNamespace().
+	uidMap, gidMap, err := userns.GetUserNamespaceMappings(userns1)
+	ok(t, err)
+	config2.UidMappings = uidMap
+	config2.GidMappings = gidMap
 	config2.Cgroups.Path = "integration/test2"
 	container2, err := newContainer(t, config2)
 	ok(t, err)
