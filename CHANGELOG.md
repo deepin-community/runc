@@ -6,6 +6,115 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased 1.1.z]
 
+## [1.1.15] - 2024-10-07
+
+> How, dear sir, did you cross the flood? By not stopping, friend, and by not
+> straining I crossed the flood.
+
+### Fixed
+
+ * The `-ENOSYS` seccomp stub is now always generated for the native
+   architecture that `runc` is running on. This is needed to work around some
+   arguably specification-incompliant behaviour from Docker on architectures
+   such as ppc64le, where the allowed architecture list is set to `null`. This
+   ensures that we always generate at least one `-ENOSYS` stub for the native
+   architecture even with these weird configs. (#4391)
+ * On a system with older kernel, reading `/proc/self/mountinfo` may skip some
+   entries, as a consequence runc may not properly set mount propagation,
+   causing container mounts leak onto the host mount namespace. (#2404, #4425)
+
+### Removed
+
+ * In order to fix performance issues in the "lightweight" bindfd protection
+   against [CVE-2019-5736], the temporary `ro` bind-mount of `/proc/self/exe`
+   has been removed. runc now creates a binary copy in all cases. (#4392, #2532)
+
+[CVE-2019-5736]: https://www.openwall.com/lists/oss-security/2019/02/11/2
+
+## [1.1.14] - 2024-09-03
+
+> 年を取っていいことは、驚かなくなることね。
+
+### Security
+
+ * Fix [CVE-2024-45310][cve-2024-45310], a low-severity attack that allowed
+   maliciously configured containers to create empty files and directories on
+   the host.
+
+[cve-2024-45310]: https://github.com/opencontainers/runc/security/advisories/GHSA-jfvp-7x6p-h2pv
+
+### Added
+
+ * Add support for Go 1.23. (#4360, #4372)
+
+### Fixed
+
+ * Revert "allow overriding VERSION value in Makefile" and add `EXTRA_VERSION`.
+   (#4370, #4382)
+ * rootfs: consolidate mountpoint creation logic. (#4359)
+
+## [1.1.13] - 2024-06-13
+
+> There is no certainty in the world. This is the only certainty I have.
+
+### Important Notes
+ * If building with Go 1.22.x, make sure to use 1.22.4 or a later version.
+   (see #4233 for more details)
+
+### Fixed
+
+ * Support go 1.22.4+. (#4313)
+ * runc list: fix race with runc delete. (#4231)
+ * Fix set nofile rlimit error. (#4277, #4299)
+ * libct/cg/fs: fix setting `rt_period` vs `rt_runtime`. (#4284)
+ * Fix a debug msg for user ns in nsexec. (#4315)
+ * script/*: fix gpg usage wrt keyboxd. (#4316)
+ * CI fixes and misc backports. (#4241)
+ * Fix codespell warnings. (#4300)
+
+### Changed
+
+ * Silence security false positives from golang/net. (#4244)
+ * libcontainer: allow containers to make apps think fips is enabled/disabled for testing. (#4257)
+ * allow overriding VERSION value in Makefile. (#4270)
+ * Vagrantfile.fedora: bump Fedora to 39. (#4261)
+ * ci/cirrus: rm centos stream 8. (#4305, #4308)
+
+## [1.1.12] - 2024-01-31
+
+> Now you're thinking with Portals™!
+
+### Security
+
+* Fix [CVE-2024-21626][cve-2024-21626], a container breakout attack that took
+  advantage of a file descriptor that was leaked internally within runc (but
+  never leaked to the container process). In addition to fixing the leak,
+  several strict hardening measures were added to ensure that future internal
+  leaks could not be used to break out in this manner again. Based on our
+  research, while no other container runtime had a similar leak, none had any
+  of the hardening steps we've introduced (and some runtimes would not check
+  for any file descriptors that a calling process may have leaked to them,
+  allowing for container breakouts due to basic user error).
+
+[cve-2024-21626]: https://github.com/opencontainers/runc/security/advisories/GHSA-xr7r-f8xq-vfvv
+
+## [1.1.11] - 2024-01-01
+
+> Happy New Year!
+
+### Fixed
+
+* Fix several issues with userns path handling. (#4122, #4124, #4134, #4144)
+
+### Changed
+
+ * Support memory.peak and memory.swap.peak in cgroups v2.
+   Add `swapOnlyUsage` in `MemoryStats`. This field reports swap-only usage.
+   For cgroupv1, `Usage` and `Failcnt` are set by subtracting memory usage
+   from memory+swap usage. For cgroupv2, `Usage`, `Limit`, and `MaxUsage`
+   are set. (#4000, #4010, #4131)
+ * build(deps): bump github.com/cyphar/filepath-securejoin. (#4140)
+
 ## [1.1.10] - 2023-10-31
 
 > Śruba, przykręcona we śnie, nie zmieni sytuacji, jaka panuje na jawie.
@@ -476,7 +585,12 @@ implementation (libcontainer) is *not* covered by this policy.
 [1.0.1]: https://github.com/opencontainers/runc/compare/v1.0.0...v1.0.1
 
 <!-- 1.1.z patch releases -->
-[Unreleased 1.1.z]: https://github.com/opencontainers/runc/compare/v1.1.10...release-1.1
+[Unreleased 1.1.z]: https://github.com/opencontainers/runc/compare/v1.1.15...release-1.1
+[1.1.15]: https://github.com/opencontainers/runc/compare/v1.1.14...v1.1.15
+[1.1.14]: https://github.com/opencontainers/runc/compare/v1.1.13...v1.1.14
+[1.1.13]: https://github.com/opencontainers/runc/compare/v1.1.12...v1.1.13
+[1.1.12]: https://github.com/opencontainers/runc/compare/v1.1.11...v1.1.12
+[1.1.11]: https://github.com/opencontainers/runc/compare/v1.1.10...v1.1.11
 [1.1.10]: https://github.com/opencontainers/runc/compare/v1.1.9...v1.1.10
 [1.1.9]: https://github.com/opencontainers/runc/compare/v1.1.8...v1.1.9
 [1.1.8]: https://github.com/opencontainers/runc/compare/v1.1.7...v1.1.8

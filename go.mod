@@ -1,13 +1,13 @@
 module github.com/opencontainers/runc
 
-go 1.17
+go 1.18
 
 require (
 	github.com/checkpoint-restore/go-criu/v5 v5.3.0
 	github.com/cilium/ebpf v0.7.0
 	github.com/containerd/console v1.0.3
 	github.com/coreos/go-systemd/v22 v22.3.2
-	github.com/cyphar/filepath-securejoin v0.2.3
+	github.com/cyphar/filepath-securejoin v0.2.4
 	github.com/docker/go-units v0.4.0
 	github.com/godbus/dbus/v5 v5.0.6
 	github.com/moby/sys/mountinfo v0.5.0
@@ -20,9 +20,9 @@ require (
 	// NOTE: urfave/cli must be <= v1.22.1 due to a regression: https://github.com/urfave/cli/issues/1092
 	github.com/urfave/cli v1.22.1
 	github.com/vishvananda/netlink v1.1.0
-	golang.org/x/net v0.8.0
-	golang.org/x/sys v0.6.0
-	google.golang.org/protobuf v1.27.1
+	golang.org/x/net v0.24.0
+	golang.org/x/sys v0.19.0
+	google.golang.org/protobuf v1.33.0
 )
 
 require (
